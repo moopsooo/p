@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Braden's License Plate Generator</title>
+    <title>License Plate Generator</title>
     <style>
         /* Adding the custom license plate font */
         @font-face {
             font-family: 'LicensePlateFont';
-            src: url('licenseplate/LicensePlate.ttf') format('truetype');
+            src: url('LicensePlate.ttf') format('truetype');
         }
 
         /* Styling the page */
@@ -33,6 +33,8 @@
             border: 1px solid #ddd;
             width: 300px;
             margin-top: 20px;
+            text-transform: uppercase; /* Ensures input is in uppercase */
+            max-length: 6; /* Caps text to 6 characters */
         }
 
         /* Styling the "Generate" button */
@@ -71,10 +73,10 @@
 </head>
 <body>
 
-    <h1>Braden's License Plate Generator</h1>
+    <h1>License Plate Generator</h1>
 
     <!-- Input box for license plate text -->
-    <input type="text" id="licenseText" placeholder="Enter License Plate">
+    <input type="text" id="licenseText" maxlength="6" placeholder="Enter License Plate">
 
     <!-- Button to generate the license plate -->
     <br>
