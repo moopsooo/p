@@ -3,73 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>License Plate Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <title>Braden's License Plate Generator</title>
     <style>
-        body { 
-            text-align: center; 
-            font-family: Arial, sans-serif; 
-            background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh; /* Makes everything centered vertically */
+        /* Adding the custom license plate font */
+        @font-face {
+            font-family: 'LicensePlateFont';
+            src: url('licenseplate/LicensePlate.ttf') format('truetype');
+        }
+
+        /* Styling the page */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
             margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
         }
-        h1 { font-size: 36px; }
-        input { 
-            font-size: 20px; 
-            padding: 10px; 
-            width: 200px; 
-            text-transform: uppercase; 
-            text-align: center; 
-            margin-bottom: 10px;
+
+        h1 {
+            margin-top: 50px;
+            font-size: 2rem;
         }
-        button { 
-            font-size: 20px; 
-            padding: 10px 20px; 
-            margin-top: 10px; 
-            background-color: #007BFF; 
-            color: white; 
-            border: none; 
-            cursor: pointer; 
+
+        /* Styling the text box */
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1.5rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 300px;
+            margin-top: 20px;
         }
-        button:hover { background-color: #0056b3; }
-        .plate { 
-            display: none; 
-            margin-top: 20px; 
-            width: 320px; height: 160px; 
-            background-color: blue; 
-            color: black; 
-            font-size: 40px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            border: 5px solid black;
-            font-family: 'Special Elite', sans-serif; /* License Plate Font */
+
+        /* Styling the "Generate" button */
+        button {
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Styling the license plate box */
+        .license-plate {
+            margin-top: 30px;
+            display: inline-block;
+            padding: 20px;
+            font-family: 'LicensePlateFont', sans-serif; /* Apply custom font */
+            background-color: #1f6bb8;
+            color: white;
+            font-size: 3rem;
+            border-radius: 10px;
+            width: 400px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
-    <h1>License Plate Generator</h1>
-    <p>Enter a 6-character code:</p>
-    <input type="text" id="plateInput" maxlength="6">
+
+    <h1>Braden's License Plate Generator</h1>
+
+    <!-- Input box for license plate text -->
+    <input type="text" id="licenseText" placeholder="Enter License Plate">
+
+    <!-- Button to generate the license plate -->
     <br>
-    <button onclick="generatePlate()">Generate</button>
-    
-    <div id="plate" class="plate"></div>
+    <button onclick="generateLicensePlate()">Generate</button>
+
+    <!-- License plate output box -->
+    <div id="licensePlateOutput" class="license-plate"></div>
 
     <script>
-        function generatePlate() {
-            let input = document.getElementById("plateInput").value.toUpperCase();
-            if (input.length === 6) {
-                document.getElementById("plate").innerText = input;
-                document.getElementById("plate").style.display = "flex";
-            } else {
-                alert("Please enter exactly 6 characters.");
-            }
+        function generateLicensePlate() {
+            // Get the value from the input field
+            const licenseText = document.getElementById('licenseText').value;
+
+            // Set the text to the license plate output box
+            document.getElementById('licensePlateOutput').innerText = licenseText;
         }
     </script>
+    
 </body>
 </html>
