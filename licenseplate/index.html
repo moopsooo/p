@@ -4,16 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>License Plate Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        body { 
+            text-align: center; 
+            font-family: Arial, sans-serif; 
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Makes everything centered vertically */
+            margin: 0;
+        }
         h1 { font-size: 36px; }
-        input { font-size: 20px; padding: 10px; width: 200px; text-transform: uppercase; text-align: center; }
-        button { font-size: 20px; padding: 10px 20px; margin-top: 10px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
+        input { 
+            font-size: 20px; 
+            padding: 10px; 
+            width: 200px; 
+            text-transform: uppercase; 
+            text-align: center; 
+            margin-bottom: 10px;
+        }
+        button { 
+            font-size: 20px; 
+            padding: 10px 20px; 
+            margin-top: 10px; 
+            background-color: #007BFF; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+        }
         button:hover { background-color: #0056b3; }
         .plate { 
             display: none; 
             margin-top: 20px; 
-            width: 300px; height: 150px; 
+            width: 320px; height: 160px; 
             background-color: blue; 
             color: black; 
             font-size: 40px; 
@@ -21,7 +47,7 @@
             justify-content: center; 
             align-items: center; 
             border: 5px solid black;
-            font-family: 'Arial Black', sans-serif;
+            font-family: 'Special Elite', sans-serif; /* License Plate Font */
         }
     </style>
 </head>
