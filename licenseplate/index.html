@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Plate Generator</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        h1 { font-size: 36px; }
+        input { font-size: 20px; padding: 10px; width: 200px; text-transform: uppercase; text-align: center; }
+        button { font-size: 20px; padding: 10px 20px; margin-top: 10px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        .plate { 
+            display: none; 
+            margin-top: 20px; 
+            width: 300px; height: 150px; 
+            background-color: blue; 
+            color: black; 
+            font-size: 40px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            border: 5px solid black;
+            font-family: 'Arial Black', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>License Plate Generator</h1>
+    <p>Enter a 6-character code:</p>
+    <input type="text" id="plateInput" maxlength="6">
+    <br>
+    <button onclick="generatePlate()">Generate</button>
+    
+    <div id="plate" class="plate"></div>
+
+    <script>
+        function generatePlate() {
+            let input = document.getElementById("plateInput").value.toUpperCase();
+            if (input.length === 6) {
+                document.getElementById("plate").innerText = input;
+                document.getElementById("plate").style.display = "flex";
+            } else {
+                alert("Please enter exactly 6 characters.");
+            }
+        }
+    </script>
+</body>
+</html>
