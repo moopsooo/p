@@ -51,13 +51,11 @@
         .plate-text {
             position: absolute;
             font-family: 'Special Elite', sans-serif;
-            font-size: 144px; /* 10% smaller text */
+            font-size: 144px; /* Text size */
             color: black;
             text-align: center;
             width: 100%;
-            top: 50%;
-            transform: translateY(-50%);
-            margin-top: 10px; /* Move text down by 10px */
+            bottom: 112px; /* Position the bottom of the text 112px up from the bottom */
         }
         #homeButton {
             position: fixed;
@@ -72,6 +70,10 @@
         }
         #homeButton:hover {
             background-color: #218838;
+        }
+        #plateContainer {
+            position: relative;
+            margin-bottom: 60px; /* Add space below the license plate */
         }
     </style>
 </head>
@@ -92,7 +94,7 @@
     <button onclick="generatePlate()">Generate</button>
     
     <!-- Image placeholder for the license plate -->
-    <div id="plateContainer" style="position: relative;">
+    <div id="plateContainer">
         <img id="plateImage" src="" alt="License Plate">
         <div id="plateText" class="plate-text"></div>
     </div>
