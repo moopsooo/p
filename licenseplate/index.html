@@ -51,7 +51,7 @@
         .plate-text {
             position: absolute;
             font-family: 'Special Elite', sans-serif;
-            font-size: 144px; /* Text size */
+            font-size: 129.6px; /* Text size reduced by 10% */
             color: black;
             text-align: center;
             width: 100%;
@@ -116,7 +116,7 @@
                     plateImage.style.display = "block"; // Show the image
                     let firstHalf = input.slice(0, 3);  // First 3 characters
                     let secondHalf = input.slice(3);  // Last 3 characters
-                    plateText.innerText = firstHalf + " " + secondHalf; // Add space between halves
+                    plateText.innerText = firstHalf + " " + " " + secondHalf; // Add another space between halves
                     plateText.style.color = "#011A46"; // Set the color to the specified hex
                     plateText.style.display = "block"; // Show the text
                 }
