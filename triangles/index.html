@@ -1,1 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triangles</title>
+    <style>
+        body { 
+            text-align: center; 
+            font-family: Arial, sans-serif; 
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; 
+            margin: 0;
+            overflow-x: hidden;
+        }
+        h1 { font-size: 36px; }
+        input { 
+            font-size: 20px; 
+            padding: 10px; 
+            width: 150px; 
+            text-align: center; 
+            margin-bottom: 10px;
+        }
+        button { 
+            font-size: 20px; 
+            padding: 10px 20px; 
+            margin-top: 10px; 
+            background-color: #007BFF; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+        }
+        button:hover { background-color: #0056b3; }
+        #canvas {
+            margin-top: 20px;
+            border: 1px solid black;
+            width: 400px;
+            height: 400px;
+            background-color: #fff;
+        }
+        #memory {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Triangles</h1>
+    <p>Enter an angle (less than 180 degrees):</p>
+    <input type="number" id="angleInput" max="179" min="1">
+    <br>
+    <button onclick="addAngle()">Next</button>
+    <button onclick="generateShape()">Generate</button>
+    
+    <div id="memory"></div>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        let angles = [];
+        let currentAngle = 0; // Start at 0 degrees
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+
+        // Function to add an angle to the sequence
+        function addAngle() {
+            let angle = parseInt(document.getElementById("angleInput").value);
+            if (angle > 0 && angle < 180) {
+                angles.push(angle);
+                document.getElementById("memory").innerText = "Angles: " + angles.join(", ");
+                document.getElementById("angleInput").value = ""; // Clear input field
+            } else {
+                alert("Please enter a valid angle (between 1 and 179).");
+            }
+        }
+
+        // Function to generate the shape based on the angles
+        function generateShape() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+
+            let centerX = canvas.width / 2;
+            let centerY = canvas.height / 2;
+            let radius = 150; // Radius of the circle we're drawing
+
+            let startX = centerX + radius;
+            let startY = centerY;
+            let angleSum = 0;
+
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+
+            // Loop through the angles to create the triangles
+            for (let i = 0; i < angles.length; i++) {
+                angleSum += angles[i];
+                let angleInRadians = (angleSum * Math.PI) / 180;
+                let endX = centerX + radius * Math.cos(angleInRadians);
+                let endY = centerY + radius * Math.sin(angleInRadians);
+                ctx.lineTo(endX, endY);
+            }
+
+            ctx.closePath();
+            ctx.stroke();
+        }
+    </script>
+</body>
+</html>
 
