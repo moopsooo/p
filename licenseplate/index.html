@@ -4,14 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>License Plate Generator</title>
-
-    <!-- Apply the custom License Plate font -->
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <style>
-        @font-face {
-            font-family: 'LicensePlateFont';
-            src: url('LicensePlate.ttf') format('truetype');
-        }
-
         body { 
             text-align: center; 
             font-family: Arial, sans-serif; 
@@ -20,29 +14,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            height: 100vh; /* Makes everything centered vertically */
             margin: 0;
-            position: relative;
         }
-
-        /* Main Page Button */
-        .main-page-button {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-size: 16px;
-            padding: 8px 12px;
-            background-color: #ff4444;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .main-page-button:hover {
-            background-color: #cc0000;
-        }
-
         h1 { font-size: 36px; }
         input { 
             font-size: 20px; 
@@ -62,104 +36,70 @@
             cursor: pointer; 
         }
         button:hover { background-color: #0056b3; }
-
-        .plate { 
+        select {
+            font-size: 18px;
+            padding: 5px;
+            margin-top: 10px;
+        }
+        #plateImage {
             display: none; 
             margin-top: 20px; 
-            width: 660px;  /* Match the PNG size */
-            height: 369px;  /* Match the PNG size */
-            background-color: transparent; /* Make the background transparent for the image */
-            color: black; 
-            font-size: 40px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            border: 5px solid black;
-            font-family: 'LicensePlateFont', sans-serif; /* Apply the correct font */
-            position: relative; /* Allows text to be placed on top */
+            width: 660px; 
+            height: 369px; 
         }
-
-        .plate img {
-            width: 100%;
-            height: 100%;
+        .plate-text {
             position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .dropdown {
-            font-size: 18px;
-            padding: 8px;
-            margin-bottom: 10px;
-            width: 220px;
+            font-family: 'Special Elite', sans-serif;
+            font-size: 40px;
+            color: black;
+            text-align: center;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
         }
     </style>
 </head>
 <body>
-    <!-- Button to go back to the main page -->
-    <button class="main-page-button" onclick="goToMainPage()">Main Page</button>
-
     <h1>License Plate Generator</h1>
     <p>Enter a 6-character code:</p>
     <input type="text" id="plateInput" maxlength="6">
-    <br>
-
-    <!-- Dropdown for selecting license plate type -->
-    <select id="plateType" class="dropdown">
-        <option value="newYork">New York</option>
-        <!-- Add more options here in the future -->
-    </select>
-    <br>
     
+    <!-- Dropdown for selecting license plate -->
+    <select id="plateSelect">
+        <option value="ny">New York</option>
+        <!-- You can add more options here in the future -->
+    </select>
+    
+    <br>
     <button onclick="generatePlate()">Generate</button>
     
-    <div id="plate" class="plate">
-        <!-- Image will be displayed here -->
+    <!-- Image placeholder for the license plate -->
+    <div id="plateContainer" style="position: relative;">
+        <img id="plateImage" src="" alt="License Plate">
+        <div id="plateText" class="plate-text"></div>
     </div>
 
     <script>
         function generatePlate() {
             let input = document.getElementById("plateInput").value.toUpperCase();
-            let plateType = document.getElementById("plateType").value;
-
-            let plateDiv = document.getElementById("plate");
-            plateDiv.style.display = "flex";
-
-            // Remove any previous images (to avoid stacking if the button is clicked multiple times)
-            plateDiv.innerHTML = '';
-
-            // Create a new image element based on the selected license plate type
-            let img = document.createElement("img");
-
-            if (plateType === 'newYork') {
-                img.src = 'licensePlate/images/nylp.png'; // New York license plate image path
-            }
-
-            // Append the image to the plate div
-            plateDiv.appendChild(img);
-
-            // Add the text over the image
+            let selectedPlate = document.getElementById("plateSelect").value;
+            
             if (input.length === 6) {
-                let text = document.createElement("div");
-                text.innerText = input;
-                text.style.position = "absolute"; // Position text on top of the image
-                text.style.color = "white"; // Make the text color white (adjust if needed)
-                text.style.fontSize = "40px"; // Same font size as the previous blue plate
-                text.style.fontFamily = "'LicensePlateFont', sans-serif"; // Correct font
-
-                // Adjust text position (you can tweak this if necessary for proper placement)
-                text.style.top = "50%";
-                text.style.left = "50%";
-                text.style.transform = "translate(-50%, -50%)"; // Center text on the plate
-
-                plateDiv.appendChild(text);
+                // Set the license plate image based on the selection
+                let plateImage = document.getElementById("plateImage");
+                
+                if (selectedPlate === "ny") {
+                    plateImage.src = "images/nylp.png"; // Path to New York license plate
+                    plateImage.style.display = "block"; // Show the image
+                }
+                
+                // Display the text on top of the image
+                let plateText = document.getElementById("plateText");
+                plateText.innerText = input;
+                plateText.style.display = "block"; // Make the text visible
             } else {
                 alert("Please enter exactly 6 characters.");
             }
-        }
-
-        function goToMainPage() {
-            window.location.href = "index.html"; // Change this if your main page has a different filename
         }
     </script>
 </body>
