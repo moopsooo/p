@@ -14,9 +14,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh; /* Ensure full-page height */
+            height: 100vh; 
             margin: 0;
-            overflow-y: auto; /* Allow vertical scrolling */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
         h1 { font-size: 36px; }
         input { 
@@ -37,89 +37,71 @@
             cursor: pointer; 
         }
         button:hover { background-color: #0056b3; }
-        select {
-            font-size: 18px;
-            padding: 5px;
-            margin-top: 10px;
-        }
-        #plateImage {
+        .plate { 
             display: none; 
             margin-top: 20px; 
-            width: 660px; 
-            height: 369px; 
-        }
-        .plate-text {
-            position: absolute;
+            width: 660px; height: 369px; 
+            background-image: url('license_plate/images/nylp.png'); 
+            background-size: cover;
+            color: #011A46; 
+            font-size: 30px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            border: 5px solid black;
             font-family: 'Special Elite', sans-serif;
-            font-size: 129.6px; /* Text size reduced by 10% */
-            color: black;
-            text-align: center;
-            width: 100%;
-            bottom: 92px; /* Adjust the position to 92px up from the bottom of the image (20px moved up) */
+            position: relative;
         }
         #homeButton {
-            position: fixed;
+            position: absolute;
             top: 20px;
             left: 20px;
-            font-size: 16px;
-            padding: 10px 15px;
             background-color: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
         }
-        #homeButton:hover {
-            background-color: #218838;
-        }
-        #plateContainer {
-            position: relative;
-            margin-bottom: 60px; /* Add space below the license plate */
+        select {
+            font-size: 20px;
+            padding: 10px;
+            width: 220px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <button id="homeButton" onclick="window.location.reload();">Return to Home</button>
-    
     <h1>License Plate Generator</h1>
+    <button id="homeButton" onclick="window.location.href = 'index.html';">Return to Home</button>
     <p>Enter a 6-character code:</p>
     <input type="text" id="plateInput" maxlength="6">
-    
-    <!-- Dropdown for selecting license plate -->
+    <br>
     <select id="plateSelect">
         <option value="ny">New York</option>
-        <!-- You can add more options here in the future -->
     </select>
-    
     <br>
     <button onclick="generatePlate()">Generate</button>
     
-    <!-- Image placeholder for the license plate -->
-    <div id="plateContainer">
-        <img id="plateImage" src="" alt="License Plate">
-        <div id="plateText" class="plate-text"></div>
-    </div>
+    <div id="plate" class="plate"></div>
 
     <script>
         function generatePlate() {
             let input = document.getElementById("plateInput").value.toUpperCase();
-            let selectedPlate = document.getElementById("plateSelect").value;
-            let plateImage = document.getElementById("plateImage");
-            let plateText = document.getElementById("plateText");
-
-            // Clear previous text if any
-            plateText.style.display = "none";
-            plateImage.style.display = "none";
+            let plateType = document.getElementById("plateSelect").value;
+            let plateDiv = document.getElementById("plate");
+            let plateText = input;
+            
+            if (plateType === "ny") {
+                // New York license plate
+                plateDiv.style.backgroundImage = "url('license_plate/images/nylp.png')";
+                plateDiv.style.color = "#011A46"; // Set text color for New York license plate
+            }
 
             if (input.length === 6) {
-                if (selectedPlate === "ny") {
-                    plateImage.src = "images/nylp.png"; // Path to New York license plate
-                    plateImage.style.display = "block"; // Show the image
-                    let firstHalf = input.slice(0, 3);  // First 3 characters
-                    let secondHalf = input.slice(3);  // Last 3 characters
-                    plateText.innerText = firstHalf + " " + " " + secondHalf; // Add another space between halves
-                    plateText.style.color = "#011A46"; // Set the color to the specified hex
-                    plateText.style.display = "block"; // Show the text
-                }
+                // Split text into two parts for space in the middle
+                let middleIndex = Math.floor(plateText.length / 2);
+                let firstHalf = plateText.slice(0, middleIndex);
+                let secondHalf = plateText.slice(middleIndex);
+
+                // Apply the split text with a space in between
+                plateDiv.innerText = firstHalf + " " + secondHalf;
+                plateDiv.style.display = "flex";
             } else {
                 alert("Please enter exactly 6 characters.");
             }
