@@ -3,121 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Triangle Generator</title>
+    <title>Braden's Projects</title>
     <style>
         body { text-align: center; font-family: Arial, sans-serif; background-color: #f4f4f4; }
         h1 { font-size: 48px; }
-        input { font-size: 20px; padding: 10px; border-radius: 5px; width: 100px; margin-top: 20px; }
         button { font-size: 20px; padding: 15px 30px; border: none; background-color: #007BFF; color: white; cursor: pointer; border-radius: 10px; margin-top: 20px; }
         button:hover { background-color: #0056b3; }
-        #canvas-container { overflow: auto; width: 300px; height: 300px; border: 1px solid black; margin-top: 20px; }
-        #canvas { width: 1000px; height: 1000px; }
+        .button-container { margin-top: 20px; }
     </style>
 </head>
 <body>
-    <h1>Triangle Generator</h1>
-    <p>Enter angles (greater than 0 and less than 180 degrees), and click "Next" to generate each triangle. When you're finished, click "Generate".</p>
-
-    <input id="angleInput" type="number" min="1" max="180" placeholder="Angle">
-    <button onclick="addAngle()">Next</button>
-    <button onclick="generateTriangles()">Generate</button>
-
-    <div id="canvas-container">
-        <canvas id="canvas" width="1000" height="1000"></canvas>
+    <h1>Braden's Projects</h1>
+    <p>Click below to check out my projects!</p>
+    <div class="button-container">
+        <button onclick="location.href='/p/licenseplate/'">License Plate Generator</button>
     </div>
-
-    <script>
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        let angles = [];
-        let startingX = 500; // Start in the center (500,500)
-        let startingY = 500; // Start in the center
-        let currentX = startingX;
-        let currentY = startingY;
-        const lineLength = 100; // Length of each side of the triangle
-
-        // Function to add the angle to the list and reset input field
-        function addAngle() {
-            const angle = parseInt(document.getElementById('angleInput').value);
-            if (angle > 0 && angle < 180) {
-                angles.push(angle);
-                document.getElementById('angleInput').value = ''; // Reset input field
-            } else {
-                alert('Please enter an angle between 1 and 179 degrees.');
-            }
-        }
-
-        // Function to generate the triangles based on input angles
-        function generateTriangles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-            currentX = startingX;
-            currentY = startingY;
-
-            drawGrid(); // Draw the grid
-            drawOrigin(); // Draw the 0,0 dot
-
-            angles.forEach(angle => {
-                drawTriangle(currentX, currentY, angle);
-            });
-        }
-
-        // Function to draw the grid every 10 pixels
-        function drawGrid() {
-            ctx.strokeStyle = '#e0e0e0'; // Light grey for the grid
-            ctx.lineWidth = 0.5;
-
-            // Vertical lines (10px apart)
-            for (let x = 0; x <= canvas.width; x += 10) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, canvas.height);
-                ctx.stroke();
-            }
-
-            // Horizontal lines (10px apart)
-            for (let y = 0; y <= canvas.height; y += 10) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(canvas.width, y);
-                ctx.stroke();
-            }
-        }
-
-        // Function to draw the origin point (0,0) as a red dot
-        function drawOrigin() {
-            ctx.beginPath();
-            ctx.arc(startingX, startingY, 5, 0, 2 * Math.PI); // Red dot at 0,0
-            ctx.fillStyle = 'red';
-            ctx.fill();
-        }
-
-        // Function to draw a triangle based on current position and angle
-        function drawTriangle(x, y, angle) {
-            const radians = (Math.PI / 180) * angle;
-
-            // First, draw the horizontal leg (always 100px)
-            const x2 = x + lineLength;
-            const y2 = y;
-
-            // Then, draw the next leg based on the angle
-            const x3 = x2 + Math.cos(radians) * lineLength;
-            const y3 = y2 + Math.sin(radians) * lineLength;
-
-            // Draw the triangle
-            ctx.beginPath();
-            ctx.moveTo(x, y); // Starting point (center)
-            ctx.lineTo(x2, y2); // Horizontal line (first leg)
-            ctx.lineTo(x3, y3); // Second leg based on the angle
-
-            ctx.closePath();
-            ctx.stroke();
-            ctx.fillStyle = "rgba(0, 123, 255, 0.5)";
-            ctx.fill();
-
-            // Update current position for the next triangle (starting at the last point)
-            currentX = x3;
-            currentY = y3;
-        }
-    </script>
+    <div class="button-container">
+        <button onclick="location.href='/p/triangles/'">Triangle/Circle Generator</button>
+    </div>
 </body>
 </html>
