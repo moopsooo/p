@@ -66,9 +66,9 @@
         .plate { 
             display: none; 
             margin-top: 20px; 
-            width: 320px; 
-            height: 160px; 
-            background-color: blue; 
+            width: 660px;  /* Match the PNG size */
+            height: 369px;  /* Match the PNG size */
+            background-color: transparent; /* Make the background transparent for the image */
             color: black; 
             font-size: 40px; 
             display: flex; 
@@ -76,6 +76,22 @@
             align-items: center; 
             border: 5px solid black;
             font-family: 'LicensePlateFont', sans-serif; /* Apply the correct font */
+            position: relative; /* Allows text to be placed on top */
+        }
+
+        .plate img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .dropdown {
+            font-size: 18px;
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 220px;
         }
     </style>
 </head>
@@ -87,16 +103,56 @@
     <p>Enter a 6-character code:</p>
     <input type="text" id="plateInput" maxlength="6">
     <br>
+
+    <!-- Dropdown for selecting license plate type -->
+    <select id="plateType" class="dropdown">
+        <option value="newYork">New York</option>
+        <!-- Add more options here in the future -->
+    </select>
+    <br>
+    
     <button onclick="generatePlate()">Generate</button>
     
-    <div id="plate" class="plate"></div>
+    <div id="plate" class="plate">
+        <!-- Image will be displayed here -->
+    </div>
 
     <script>
         function generatePlate() {
             let input = document.getElementById("plateInput").value.toUpperCase();
+            let plateType = document.getElementById("plateType").value;
+
+            let plateDiv = document.getElementById("plate");
+            plateDiv.style.display = "flex";
+
+            // Remove any previous images (to avoid stacking if the button is clicked multiple times)
+            plateDiv.innerHTML = '';
+
+            // Create a new image element based on the selected license plate type
+            let img = document.createElement("img");
+
+            if (plateType === 'newYork') {
+                img.src = 'licensePlate/images/nylp.png'; // New York license plate image path
+            }
+
+            // Append the image to the plate div
+            plateDiv.appendChild(img);
+
+            // Add the text over the image
             if (input.length === 6) {
-                document.getElementById("plate").innerText = input;
-                document.getElementById("plate").style.display = "flex";
+                let text = document.createElement("div");
+                text.innerText = input;
+                text.style.position = "absolute"; // Position text on top of the image
+                text.style.color = "white"; // Make the text color white (adjust if needed)
+                text.style.fontSize = "40px"; // Same font size as the previous blue plate
+                text.style.fontFamily = "'LicensePlateFont', sans-serif"; // Correct font
+
+                // Adjust text position (you can tweak this if necessary for proper placement)
+                text.style.top = "50%";
+                text.style.left = "50%";
+                text.style.transform = "translate(-50%, -50%)"; // Center text on the plate
+
+                plateDiv.appendChild(text);
             } else {
                 alert("Please enter exactly 6 characters.");
             }
