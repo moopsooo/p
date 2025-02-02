@@ -14,8 +14,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh; /* Makes everything centered vertically */
+            min-height: 100vh; /* Ensure full-page height */
             margin: 0;
+            overflow: hidden; /* Prevent scrolling */
         }
         h1 { font-size: 36px; }
         input { 
@@ -50,16 +51,32 @@
         .plate-text {
             position: absolute;
             font-family: 'Special Elite', sans-serif;
-            font-size: 40px;
+            font-size: 160px; /* 4x larger text */
             color: black;
             text-align: center;
             width: 100%;
             top: 50%;
             transform: translateY(-50%);
         }
+        #homeButton {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 16px;
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #homeButton:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
+    <button id="homeButton" onclick="window.location.reload();">Return to Home</button>
+    
     <h1>License Plate Generator</h1>
     <p>Enter a 6-character code:</p>
     <input type="text" id="plateInput" maxlength="6">
@@ -83,20 +100,21 @@
         function generatePlate() {
             let input = document.getElementById("plateInput").value.toUpperCase();
             let selectedPlate = document.getElementById("plateSelect").value;
-            
+            let plateImage = document.getElementById("plateImage");
+            let plateText = document.getElementById("plateText");
+
+            // Clear previous text if any
+            plateText.style.display = "none";
+            plateImage.style.display = "none";
+
             if (input.length === 6) {
-                // Set the license plate image based on the selection
-                let plateImage = document.getElementById("plateImage");
-                
                 if (selectedPlate === "ny") {
                     plateImage.src = "images/nylp.png"; // Path to New York license plate
                     plateImage.style.display = "block"; // Show the image
+                    plateText.innerText = input;
+                    plateText.style.color = "#011A46"; // Set the color to the specified hex
+                    plateText.style.display = "block"; // Show the text
                 }
-                
-                // Display the text on top of the image
-                let plateText = document.getElementById("plateText");
-                plateText.innerText = input;
-                plateText.style.display = "block"; // Make the text visible
             } else {
                 alert("Please enter exactly 6 characters.");
             }
