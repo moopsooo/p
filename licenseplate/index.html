@@ -16,7 +16,7 @@
             justify-content: center;
             min-height: 100vh; /* Ensure full-page height */
             margin: 0;
-            overflow: hidden; /* Prevent scrolling */
+            overflow-y: auto; /* Allow vertical scrolling */
         }
         h1 { font-size: 36px; }
         input { 
@@ -51,12 +51,13 @@
         .plate-text {
             position: absolute;
             font-family: 'Special Elite', sans-serif;
-            font-size: 160px; /* 4x larger text */
+            font-size: 144px; /* 10% smaller text */
             color: black;
             text-align: center;
             width: 100%;
             top: 50%;
             transform: translateY(-50%);
+            margin-top: 10px; /* Move text down by 10px */
         }
         #homeButton {
             position: fixed;
@@ -111,7 +112,9 @@
                 if (selectedPlate === "ny") {
                     plateImage.src = "images/nylp.png"; // Path to New York license plate
                     plateImage.style.display = "block"; // Show the image
-                    plateText.innerText = input;
+                    let firstHalf = input.slice(0, 3);  // First 3 characters
+                    let secondHalf = input.slice(3);  // Last 3 characters
+                    plateText.innerText = firstHalf + " " + secondHalf; // Add space between halves
                     plateText.style.color = "#011A46"; // Set the color to the specified hex
                     plateText.style.display = "block"; // Show the text
                 }
