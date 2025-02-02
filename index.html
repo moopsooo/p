@@ -10,7 +10,8 @@
         input { font-size: 20px; padding: 10px; border-radius: 5px; width: 100px; margin-top: 20px; }
         button { font-size: 20px; padding: 15px 30px; border: none; background-color: #007BFF; color: white; cursor: pointer; border-radius: 10px; margin-top: 20px; }
         button:hover { background-color: #0056b3; }
-        #canvas { margin-top: 20px; border: 1px solid black; }
+        #canvas-container { overflow: auto; width: 300px; height: 300px; border: 1px solid black; margin-top: 20px; }
+        #canvas { width: 1000px; height: 1000px; }
     </style>
 </head>
 <body>
@@ -20,19 +21,19 @@
     <input id="angleInput" type="number" min="1" max="180" placeholder="Angle">
     <button onclick="addAngle()">Next</button>
     <button onclick="generateTriangles()">Generate</button>
-    
-    <canvas id="canvas" width="600" height="600"></canvas>
+
+    <div id="canvas-container">
+        <canvas id="canvas" width="1000" height="1000"></canvas>
+    </div>
 
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         let angles = [];
-        let startingX = canvas.width / 2; // Start in the center
-        let startingY = canvas.height / 2; // Start in the center
+        let startingX = 500; // Start in the center (500,500)
+        let startingY = 500; // Start in the center
         let currentX = startingX;
         let currentY = startingY;
-        let currentAngle = 0;
-        const scale = 0.5; // Zoom out factor for better view
         const lineLength = 100; // Length of each side of the triangle
 
         // Function to add the angle to the list and reset input field
@@ -51,14 +52,43 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
             currentX = startingX;
             currentY = startingY;
-            currentAngle = 0; // Reset angle for new generation
 
-            // Apply zooming out effect
-            ctx.setTransform(scale, 0, 0, scale, canvas.width / 2, canvas.height / 2);
+            drawGrid(); // Draw the grid
+            drawOrigin(); // Draw the 0,0 dot
 
             angles.forEach(angle => {
                 drawTriangle(currentX, currentY, angle);
             });
+        }
+
+        // Function to draw the grid every 10 pixels
+        function drawGrid() {
+            ctx.strokeStyle = '#e0e0e0'; // Light grey for the grid
+            ctx.lineWidth = 0.5;
+
+            // Vertical lines (10px apart)
+            for (let x = 0; x <= canvas.width; x += 10) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+
+            // Horizontal lines (10px apart)
+            for (let y = 0; y <= canvas.height; y += 10) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+        }
+
+        // Function to draw the origin point (0,0) as a red dot
+        function drawOrigin() {
+            ctx.beginPath();
+            ctx.arc(startingX, startingY, 5, 0, 2 * Math.PI); // Red dot at 0,0
+            ctx.fillStyle = 'red';
+            ctx.fill();
         }
 
         // Function to draw a triangle based on current position and angle
